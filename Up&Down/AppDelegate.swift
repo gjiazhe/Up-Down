@@ -33,7 +33,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        NSThread.init(target: self, selector: #selector(startUpdateTimer), object: nil).start()
+    }
+    
+    func startUpdateTimer() {
         NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(updateRateData), userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().run()
     }
     
     func updateRateData() {
