@@ -1,5 +1,7 @@
 # Up&Down![icon](screenshot/icon.png)
 
+[![Join the chat at https://gitter.im/gjiazhe/Up-Down](https://badges.gitter.im/gjiazhe/Up-Down.svg)](https://gitter.im/gjiazhe/Up-Down?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Up&Down is a menu bar widget for OS X that monitors upload and download speeds.
 
 ![Screenshot](screenshot/1.png)
