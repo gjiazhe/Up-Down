@@ -46,7 +46,7 @@ extension AppDelegate {
     func menuItemAboutClick() {
         let alert = NSAlert.init()
         alert.messageText = "About Up&Down"
-        alert.addButtonWithTitle("About Me")
+        alert.addButtonWithTitle("Github")
         alert.addButtonWithTitle("Close")
         alert.informativeText = "Up&Down is an open-source Mac OS X app to monitor upload and download speeds."
         let result = alert.runModal()
