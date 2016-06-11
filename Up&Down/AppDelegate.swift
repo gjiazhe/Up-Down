@@ -20,13 +20,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menu = NSMenu.init()
         autoLaunchMenu = NSMenuItem.init()
-        autoLaunchMenu.title = "Launch when login"
+        autoLaunchMenu.title = "Start at login"
         autoLaunchMenu.state = AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0
         autoLaunchMenu.action = #selector(menuItemAutoLaunchClick)
         menu.addItem(autoLaunchMenu)
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItemWithTitle("About", action: #selector(menuItemAboutClick), keyEquivalent: "")
-        menu.addItemWithTitle("Quit", action: #selector(menuItemQuitClick), keyEquivalent: "q")
+        menu.addItemWithTitle("Quit Up&Down", action: #selector(menuItemQuitClick), keyEquivalent: "q")
         
         statusItemView = StatusItemView.init(statusItem: statusItem, menu: menu)
         statusItem.view = statusItemView
@@ -47,8 +47,8 @@ extension AppDelegate {
         let alert = NSAlert.init()
         alert.messageText = "About Up&Down"
         alert.addButtonWithTitle("About Me")
-        alert.addButtonWithTitle("Cancle")
-        alert.informativeText = "An open-source Mac OSX app to monitor upload and download speed."
+        alert.addButtonWithTitle("Close")
+        alert.informativeText = "Up&Down is an open-source Mac OS X app to monitor upload and download speeds."
         let result = alert.runModal()
         switch result {
         case NSAlertFirstButtonReturn:
@@ -56,7 +56,7 @@ extension AppDelegate {
             NSWorkspace.sharedWorkspace().openURL(NSURL.init(string: "https://github.com/gjiazhe/Up-Down")!)
             break
         default:
-            Swift.print("Cancel")
+            Swift.print("Close")
             break
         }
     }
