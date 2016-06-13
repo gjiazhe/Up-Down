@@ -8,28 +8,28 @@
 
 import Foundation
 
-public class MonitorTask: NSObject {
+public class NetWorkMonitor: NSObject {
     let statusItemView: StatusItemView
     init(statusItemView view: StatusItemView) {
         statusItemView = view
     }
     
     func start() {
-        NSThread.init(target: self, selector: #selector(startUpdateTimer), object: nil).start()
+        NSThread(target: self, selector: #selector(startUpdateTimer), object: nil).start()
     }
     
     func startUpdateTimer() {
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(updateRateData), userInfo: nil, repeats: true)
+        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(updateNetWorkData), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().run()
     }
     
     
-    func updateRateData() {
-        let task = NSTask.init()
+    func updateNetWorkData() {
+        let task = NSTask()
         task.launchPath = "/usr/bin/sar"
         task.arguments = ["-n", "DEV", "1"]
         
-        let pipe = NSPipe.init()
+        let pipe = NSPipe()
         task.standardOutput = pipe
         
         task.launch()
@@ -41,9 +41,9 @@ public class MonitorTask: NSObject {
             let fileHandle = pipe.fileHandleForReading
             let data = fileHandle.readDataToEndOfFile()
             
-            var string = String.init(data: data, encoding: NSUTF8StringEncoding)
+            var string = String(data: data, encoding: NSUTF8StringEncoding)
             string = string?.substringFromIndex((string?.rangeOfString("Aver")?.startIndex)!)
-            handleData(string!)
+            handleNetWorkData(string!)
         } else {
             print("Task failed.")
         }
@@ -74,7 +74,7 @@ public class MonitorTask: NSObject {
      Average:   bridge0        0             0           0             0
      Average:   en4            0             0           0             0
      */
-    func handleData(string: String) {
+    func handleNetWorkData(string: String) {
         //        print(string)
         let pattern = "en\\w+\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)"
         do {
@@ -83,8 +83,8 @@ public class MonitorTask: NSObject {
             var upRate: Float = 0
             var downRate: Float = 0
             for result in results {
-                downRate += Float.init((string as NSString).substringWithRange(result.rangeAtIndex(2)))!
-                upRate += Float.init((string as NSString).substringWithRange(result.rangeAtIndex(4)))!
+                downRate += Float((string as NSString).substringWithRange(result.rangeAtIndex(2)))!
+                upRate += Float((string as NSString).substringWithRange(result.rangeAtIndex(4)))!
             }
             statusItemView.setRateData(up: upRate, down: downRate)
         }

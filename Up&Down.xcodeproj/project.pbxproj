@@ -13,7 +13,7 @@
 		430175F91CF2CBA30051D8C9 /* AutoLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175F81CF2CBA30051D8C9 /* AutoLaunchHelper.swift */; };
 		430175FB1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175FA1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift */; };
 		430175FD1CF2CC0D0051D8C9 /* StatusItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175FC1CF2CC0D0051D8C9 /* StatusItemView.swift */; };
-		4382318E1D01BCD40090FAC9 /* MonitorTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4382318D1D01BCD40090FAC9 /* MonitorTask.swift */; };
+		4382318E1D01BCD40090FAC9 /* NetWorkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4382318D1D01BCD40090FAC9 /* NetWorkMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		430175F81CF2CBA30051D8C9 /* AutoLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLaunchHelper.swift; sourceTree = "<group>"; };
 		430175FA1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemThemeChangeHelper.swift; sourceTree = "<group>"; };
 		430175FC1CF2CC0D0051D8C9 /* StatusItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusItemView.swift; sourceTree = "<group>"; };
-		4382318D1D01BCD40090FAC9 /* MonitorTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorTask.swift; sourceTree = "<group>"; };
+		4382318D1D01BCD40090FAC9 /* NetWorkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 				430175F71CF2CB740051D8C9 /* Helpers */,
 				430175E81CF2CA030051D8C9 /* AppDelegate.swift */,
 				430175FC1CF2CC0D0051D8C9 /* StatusItemView.swift */,
-				4382318D1D01BCD40090FAC9 /* MonitorTask.swift */,
+				4382318D1D01BCD40090FAC9 /* NetWorkMonitor.swift */,
 				430175EE1CF2CA030051D8C9 /* Main.storyboard */,
 				430175F11CF2CA030051D8C9 /* Info.plist */,
 				430175EC1CF2CA030051D8C9 /* Assets.xcassets */,
@@ -148,7 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4382318E1D01BCD40090FAC9 /* MonitorTask.swift in Sources */,
+				4382318E1D01BCD40090FAC9 /* NetWorkMonitor.swift in Sources */,
 				430175E91CF2CA030051D8C9 /* AppDelegate.swift in Sources */,
 				430175FD1CF2CC0D0051D8C9 /* StatusItemView.swift in Sources */,
 				430175F91CF2CBA30051D8C9 /* AutoLaunchHelper.swift in Sources */,
