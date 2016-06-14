@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Up&Down
+
+  Created by 郭佳哲 on 6/14/16.
+  Copyright © 2016 郭佳哲. All rights reserved.
+*/
+
+"Start at login" = "Start at login";
+"About" = "About";
+"Quit Up&Down" = "Quit Up&Down";
+"Close" = "Close";
+"About Up&Down" = "About Up&Down";
+"About content" = "Up&Down is an open-source Mac OS X app to monitor upload and download speeds.";

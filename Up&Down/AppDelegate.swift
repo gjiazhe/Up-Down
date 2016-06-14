@@ -20,13 +20,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menu = NSMenu()
         autoLaunchMenu = NSMenuItem()
-        autoLaunchMenu.title = "Start at login"
+        autoLaunchMenu.title = NSLocalizedString("Start at login", comment: "") 
         autoLaunchMenu.state = AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0
         autoLaunchMenu.action = #selector(menuItemAutoLaunchClick)
         menu.addItem(autoLaunchMenu)
         menu.addItem(NSMenuItem.separatorItem())
-        menu.addItemWithTitle("About", action: #selector(menuItemAboutClick), keyEquivalent: "")
-        menu.addItemWithTitle("Quit Up&Down", action: #selector(menuItemQuitClick), keyEquivalent: "q")
+        menu.addItemWithTitle(NSLocalizedString("About", comment: ""), action: #selector(menuItemAboutClick), keyEquivalent: "")
+        menu.addItemWithTitle(NSLocalizedString("Quit Up&Down", comment: ""), action: #selector(menuItemQuitClick), keyEquivalent: "q")
         
         statusItemView = StatusItemView(statusItem: statusItem, menu: menu)
         statusItem.view = statusItemView
@@ -45,18 +45,18 @@ extension AppDelegate {
     
     func menuItemAboutClick() {
         let alert = NSAlert()
-        alert.messageText = "About Up&Down"
+        alert.messageText = NSLocalizedString("About Up&Down", comment:"")
         alert.addButtonWithTitle("Github")
-        alert.addButtonWithTitle("Close")
-        alert.informativeText = "Up&Down is an open-source Mac OS X app to monitor upload and download speeds."
+        alert.addButtonWithTitle(NSLocalizedString("Close", comment:""))
+        alert.informativeText = NSLocalizedString("About content", comment: "")
         let result = alert.runModal()
         switch result {
         case NSAlertFirstButtonReturn:
-            Swift.print("About Me")
+            //open Github page
             NSWorkspace.sharedWorkspace().openURL(NSURL(string: "https://github.com/gjiazhe/Up-Down")!)
             break
         default:
-            Swift.print("Close")
+            //close alert window
             break
         }
     }

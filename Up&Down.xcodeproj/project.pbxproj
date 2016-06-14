@@ -13,6 +13,7 @@
 		430175F91CF2CBA30051D8C9 /* AutoLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175F81CF2CBA30051D8C9 /* AutoLaunchHelper.swift */; };
 		430175FB1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175FA1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift */; };
 		430175FD1CF2CC0D0051D8C9 /* StatusItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430175FC1CF2CC0D0051D8C9 /* StatusItemView.swift */; };
+		436AB3951D0FD81600D40F37 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 436AB3971D0FD81600D40F37 /* Localizable.strings */; };
 		4382318E1D01BCD40090FAC9 /* NetWorkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4382318D1D01BCD40090FAC9 /* NetWorkMonitor.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,9 @@
 		430175F81CF2CBA30051D8C9 /* AutoLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLaunchHelper.swift; sourceTree = "<group>"; };
 		430175FA1CF2CBCF0051D8C9 /* SystemThemeChangeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemThemeChangeHelper.swift; sourceTree = "<group>"; };
 		430175FC1CF2CC0D0051D8C9 /* StatusItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusItemView.swift; sourceTree = "<group>"; };
+		436AB3961D0FD81600D40F37 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		436AB3991D0FD8D200D40F37 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		436AB39A1D0FDD8B00D40F37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4382318D1D01BCD40090FAC9 /* NetWorkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetWorkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +69,7 @@
 				430175EE1CF2CA030051D8C9 /* Main.storyboard */,
 				430175F11CF2CA030051D8C9 /* Info.plist */,
 				430175EC1CF2CA030051D8C9 /* Assets.xcassets */,
+				436AB3971D0FD81600D40F37 /* Localizable.strings */,
 			);
 			path = "Up&Down";
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 430175DC1CF2CA030051D8C9;
 			productRefGroup = 430175E61CF2CA030051D8C9 /* Products */;
@@ -137,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				430175ED1CF2CA030051D8C9 /* Assets.xcassets in Resources */,
+				436AB3951D0FD81600D40F37 /* Localizable.strings in Resources */,
 				430175F01CF2CA030051D8C9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +172,16 @@
 				430175EF1CF2CA030051D8C9 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		436AB3971D0FD81600D40F37 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				436AB3961D0FD81600D40F37 /* en */,
+				436AB3991D0FD8D200D40F37 /* zh-Hans */,
+				436AB39A1D0FDD8B00D40F37 /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

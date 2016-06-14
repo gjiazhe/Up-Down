@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Up&Down
+
+  Created by 郭佳哲 on 6/14/16.
+  Copyright © 2016 郭佳哲. All rights reserved.
+*/
+
+"Start at login" = "开机时启动";
+"About" = "关于";
+"Quit Up&Down" = "退出 Up&Down";
+"Close" = "关闭";
+"About Up&Down" = "关于 Up&Down";
+"About content" = "Up&Down 是一个开源的 Mac OS X 应用， 可以在状态栏上显示上传和下载速度。";
