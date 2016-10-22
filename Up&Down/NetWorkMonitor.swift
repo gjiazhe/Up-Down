@@ -8,85 +8,68 @@
 
 import Foundation
 
-public class NetWorkMonitor: NSObject {
+open class NetWorkMonitor: NSObject {
     let statusItemView: StatusItemView
     init(statusItemView view: StatusItemView) {
         statusItemView = view
     }
     
+    let interval: Double = 2
+    var preBytesIn: Double = -1
+    var preBytesOut: Double = -1
+    
     func start() {
-        NSThread(target: self, selector: #selector(startUpdateTimer), object: nil).start()
+        Thread(target: self, selector: #selector(startUpdateTimer), object: nil).start()
     }
     
     func startUpdateTimer() {
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(updateNetWorkData), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().run()
+        Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(updateNetWorkData), userInfo: nil, repeats: true)
+        RunLoop.current.run()
     }
     
-    
+    // nettop -x -k state -k interface -k rx_dupe -k rx_ooo -k re-tx -k rtt_avg -k rcvsize -k tx_win -k tc_class -k tc_mgt -k cc_algo -k P -k C -k R -k W -l 1 -t wifi -t wired
     func updateNetWorkData() {
-        let task = NSTask()
-        task.launchPath = "/usr/bin/sar"
-        task.arguments = ["-n", "DEV", "1"]
+        let task = Process()
+        task.launchPath = "/usr/bin/nettop"
+        task.arguments = ["-x", "-k", "state", "-k", "interface", "-k", "rx_dupe", "-k", "rx_ooo", "-k", "re-tx", "-k", "rtt_avg", "-k", "rcvsize", "-k", "tx_win", "-k", "tc_class", "-k", "tc_mgt", "-k", "cc_algo", "-k", "P", "-k", "C", "-k", "R", "-k", "W", "-l", "1", "-t", "wifi", "-t", "wired"]
         
-        let pipe = NSPipe()
+        let pipe = Pipe()
         task.standardOutput = pipe
         
         task.launch()
-        task.waitUntilExit()
         
-        let status = task.terminationStatus
-        if status == 0 {
-            //            print("Task succeeded.")
-            let fileHandle = pipe.fileHandleForReading
-            let data = fileHandle.readDataToEndOfFile()
+        pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: pipe.fileHandleForReading , queue: nil) {
+            notification in
             
-            var string = String(data: data, encoding: NSUTF8StringEncoding)
-            string = string?.substringFromIndex((string?.rangeOfString("Aver")?.startIndex)!)
-            handleNetWorkData(string!)
-        } else {
-            print("Task failed.")
+            let output = pipe.fileHandleForReading.availableData
+            let outputString = String(data: output, encoding: String.Encoding.utf8) ?? ""
+            
+            self.handleNetWorkData(outputString)
         }
     }
     
-    /*
-     23:18:25    IFACE    Ipkts/s      Ibytes/s     Opkts/s      Obytes/s
-     
-     
-     23:18:26    lo0            0             0           0             0
-     23:18:26    gif0           0             0           0             0
-     23:18:26    stf0           0             0           0             0
-     23:18:26    en0            0             0           0             0
-     23:18:26    en1            0             0           0             0
-     23:18:26    en2            0             0           0             0
-     23:18:26    p2p0           0             0           0             0
-     23:18:26    awdl0          0             0           0             0
-     23:18:26    bridge0        0             0           0             0
-     23:18:26    en4            0             0           0             0
-     Average:   lo0            0             0           0             0
-     Average:   gif0           0             0           0             0
-     Average:   stf0           0             0           0             0
-     Average:   en0            0             0           0             0
-     Average:   en1            0             0           0             0
-     Average:   en2            0             0           0             0
-     Average:   p2p0           0             0           0             0
-     Average:   awdl0          0             0           0             0
-     Average:   bridge0        0             0           0             0
-     Average:   en4            0             0           0             0
-     */
-    func handleNetWorkData(string: String) {
-        //        print(string)
-        let pattern = "en\\w+\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)"
+    
+    func handleNetWorkData(_ string: String) {
+        var bytesIn: Double = 0
+        var bytesOut: Double = 0
+        
+        let pattern = "\\.\\d+\\s+(\\d+)\\s+(\\d+)\\n"
         do {
-            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-            let results = regex.matchesInString(string, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, string.characters.count))
-            var upRate: Float = 0
-            var downRate: Float = 0
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+            let results = regex.matches(in: string, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, string.characters.count))
             for result in results {
-                downRate += Float((string as NSString).substringWithRange(result.rangeAtIndex(2)))!
-                upRate += Float((string as NSString).substringWithRange(result.rangeAtIndex(4)))!
+                bytesIn += Double((string as NSString).substring(with: result.rangeAt(1)))!
+                bytesOut += Double((string as NSString).substring(with: result.rangeAt(2)))!
             }
-            statusItemView.setRateData(up: upRate, down: downRate)
+            bytesIn /= interval
+            bytesOut /= interval
+            
+            if (preBytesOut != -1) {
+                statusItemView.setRateData(up: bytesOut-preBytesOut, down: bytesIn-preBytesIn)
+            }
+            preBytesOut = bytesOut
+            preBytesIn = bytesIn
         }
         catch {}
     }

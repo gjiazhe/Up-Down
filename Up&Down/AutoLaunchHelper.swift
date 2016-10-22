@@ -7,29 +7,29 @@
 //
 
 import Foundation
-public class AutoLaunchHelper {
+open class AutoLaunchHelper {
     static func isLaunchWhenLogin() -> Bool {
         return (itemReferencesInLoginItems().existingReference != nil)
     }
     
-    static func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItemRef?, lastReference: LSSharedFileListItemRef?) {
-        if let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
+    static func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItem?, lastReference: LSSharedFileListItem?) {
+        if let appUrl : URL = URL(fileURLWithPath: Bundle.main.bundlePath) {
             let loginItemsRef = LSSharedFileListCreate(
                 nil,
                 kLSSharedFileListSessionLoginItems.takeRetainedValue(),
                 nil
-                ).takeRetainedValue() as LSSharedFileListRef?
+                ).takeRetainedValue() as LSSharedFileList?
             if loginItemsRef != nil {
                 let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
                 //print("There are \(loginItems.count) login items")
-                let lastItemRef: LSSharedFileListItemRef = loginItems.lastObject as! LSSharedFileListItemRef
+                let lastItemRef: LSSharedFileListItem = loginItems.lastObject as! LSSharedFileListItem
                 for i in 0 ..< loginItems.count {
-                    let currentItemRef: LSSharedFileListItemRef = loginItems.objectAtIndex(i) as! LSSharedFileListItemRef
+                    let currentItemRef: LSSharedFileListItem = loginItems.object(at: i) as! LSSharedFileListItem
                     
                     if let resUrl = LSSharedFileListItemCopyResolvedURL(currentItemRef, 0, nil){
-                        let urlRef: NSURL = resUrl.takeRetainedValue()
+                        let urlRef: URL = resUrl.takeRetainedValue() as URL
                         //print("URL Ref: \(urlRef.lastPathComponent!)")
-                        if urlRef.isEqual(appUrl) {
+                        if urlRef == appUrl {
                             return (currentItemRef, lastItemRef)
                         }
                     } else {
@@ -50,10 +50,10 @@ public class AutoLaunchHelper {
             nil,
             kLSSharedFileListSessionLoginItems.takeRetainedValue(),
             nil
-            ).takeRetainedValue() as LSSharedFileListRef?
+            ).takeRetainedValue() as LSSharedFileList?
         if loginItemsRef != nil {
             if shouldBeToggled {
-                if let appUrl : CFURLRef = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
+                if let appUrl : CFURL = URL(fileURLWithPath: Bundle.main.bundlePath) as CFURL? {
                     LSSharedFileListInsertItemURL(
                         loginItemsRef,
                         itemReferences.lastReference,

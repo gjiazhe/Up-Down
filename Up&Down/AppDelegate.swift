@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let autoLaunchMenu:NSMenuItem
     
     override init() {
-        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(72)
+        statusItem = NSStatusBar.system().statusItem(withLength: 72)
         
         menu = NSMenu()
         autoLaunchMenu = NSMenuItem()
@@ -24,16 +24,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         autoLaunchMenu.state = AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0
         autoLaunchMenu.action = #selector(menuItemAutoLaunchClick)
         menu.addItem(autoLaunchMenu)
-        menu.addItem(NSMenuItem.separatorItem())
-        menu.addItemWithTitle(NSLocalizedString("About", comment: ""), action: #selector(menuItemAboutClick), keyEquivalent: "")
-        menu.addItemWithTitle(NSLocalizedString("Quit Up&Down", comment: ""), action: #selector(menuItemQuitClick), keyEquivalent: "q")
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(withTitle: NSLocalizedString("About", comment: ""), action: #selector(menuItemAboutClick), keyEquivalent: "")
+        menu.addItem(withTitle: NSLocalizedString("Quit Up&Down", comment: ""), action: #selector(menuItemQuitClick), keyEquivalent: "q")
         
         statusItemView = StatusItemView(statusItem: statusItem, menu: menu)
         statusItem.view = statusItemView
     }
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        NetWorkMonitor(statusItemView: statusItemView).start()
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+         NetWorkMonitor(statusItemView: statusItemView).start()
     }
 }
 
@@ -46,14 +46,14 @@ extension AppDelegate {
     func menuItemAboutClick() {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("About Up&Down", comment:"")
-        alert.addButtonWithTitle("Github")
-        alert.addButtonWithTitle(NSLocalizedString("Close", comment:""))
+        alert.addButton(withTitle: "Github")
+        alert.addButton(withTitle: NSLocalizedString("Close", comment:""))
         alert.informativeText = NSLocalizedString("About content", comment: "")
         let result = alert.runModal()
         switch result {
         case NSAlertFirstButtonReturn:
             //open Github page
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: "https://github.com/gjiazhe/Up-Down")!)
+            NSWorkspace.shared().open(URL(string: "https://github.com/gjiazhe/Up-Down")!)
             break
         default:
             //close alert window
