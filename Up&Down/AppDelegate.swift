@@ -16,12 +16,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let autoLaunchMenu:NSMenuItem
     
     override init() {
-        statusItem = NSStatusBar.system().statusItem(withLength: 72)
+        statusItem = NSStatusBar.system.statusItem(withLength: 72)
         
         menu = NSMenu()
         autoLaunchMenu = NSMenuItem()
         autoLaunchMenu.title = NSLocalizedString("Start at login", comment: "") 
-        autoLaunchMenu.state = AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0
+        autoLaunchMenu.state = NSControl.StateValue(rawValue: AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0)
         autoLaunchMenu.action = #selector(menuItemAutoLaunchClick)
         menu.addItem(autoLaunchMenu)
         menu.addItem(NSMenuItem.separator())
@@ -39,11 +39,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 //action
 extension AppDelegate {
-    func menuItemQuitClick() {
+    @objc func menuItemQuitClick() {
         NSApp.terminate(nil)
     }
     
-    func menuItemAboutClick() {
+    @objc func menuItemAboutClick() {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("About Up&Down", comment:"")
         alert.addButton(withTitle: "Github")
@@ -51,9 +51,9 @@ extension AppDelegate {
         alert.informativeText = NSLocalizedString("About content", comment: "")
         let result = alert.runModal()
         switch result {
-        case NSAlertFirstButtonReturn:
+        case NSApplication.ModalResponse.alertFirstButtonReturn:
             //open Github page
-            NSWorkspace.shared().open(URL(string: "https://github.com/gjiazhe/Up-Down")!)
+            NSWorkspace.shared.open(URL(string: "https://github.com/gjiazhe/Up-Down")!)
             break
         default:
             //close alert window
@@ -61,8 +61,8 @@ extension AppDelegate {
         }
     }
     
-    func menuItemAutoLaunchClick() {
+    @objc func menuItemAutoLaunchClick() {
         AutoLaunchHelper.toggleLaunchWhenLogin()
-        autoLaunchMenu.state = AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0
+        autoLaunchMenu.state = NSControl.StateValue(rawValue: AutoLaunchHelper.isLaunchWhenLogin() ? 1 : 0)
     }
 }
