@@ -32,7 +32,7 @@ open class StatusItemView: NSControl {
         
         darkMode = SystemThemeChangeHelper.isCurrentDark()
         
-        SystemThemeChangeHelper.addRespond(target: self, selector: #selector(changeMode))
+        SystemThemeChangeHelper.addRespond(target: self, selector: #selector(changeThemeMode))
     }
     
     required public init?(coder: NSCoder) {
@@ -43,7 +43,7 @@ open class StatusItemView: NSControl {
         statusItem.drawStatusBarBackground(in: dirtyRect, withHighlight: mouseDown)
         
         fontColor = (darkMode||mouseDown) ? NSColor.white : NSColor.black
-        let fontAttributes = [NSFontAttributeName: NSFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: fontColor] as [String : Any]
+        let fontAttributes = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: fontSize), NSAttributedString.Key.foregroundColor: fontColor] as [NSAttributedString.Key : Any]
         
         let upRateString = NSAttributedString(string: upRate+" ↑", attributes: fontAttributes)
         let upRateRect = upRateString.boundingRect(with: NSSize(width: 100, height: 100), options: .usesLineFragmentOrigin)
@@ -100,7 +100,7 @@ open class StatusItemView: NSControl {
         }
     }
     
-    func changeMode() {
+    @objc func changeThemeMode() {
         darkMode = SystemThemeChangeHelper.isCurrentDark()
         setNeedsDisplay()
     }

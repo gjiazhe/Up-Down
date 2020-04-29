@@ -22,13 +22,13 @@ open class NetWorkMonitor: NSObject {
         Thread(target: self, selector: #selector(startUpdateTimer), object: nil).start()
     }
     
-    func startUpdateTimer() {
+    @objc func startUpdateTimer() {
         Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(updateNetWorkData), userInfo: nil, repeats: true)
         RunLoop.current.run()
     }
     
     // nettop -x -k state -k interface -k rx_dupe -k rx_ooo -k re-tx -k rtt_avg -k rcvsize -k tx_win -k tc_class -k tc_mgt -k cc_algo -k P -k C -k R -k W -l 1 -t wifi -t wired
-    func updateNetWorkData() {
+    @objc func updateNetWorkData() {
         let task = Process()
         task.launchPath = "/usr/bin/nettop"
         task.arguments = ["-x", "-k", "state", "-k", "interface", "-k", "rx_dupe", "-k", "rx_ooo", "-k", "re-tx", "-k", "rtt_avg", "-k", "rcvsize", "-k", "tx_win", "-k", "tc_class", "-k", "tc_mgt", "-k", "cc_algo", "-k", "P", "-k", "C", "-k", "R", "-k", "W", "-l", "1", "-t", "wifi", "-t", "wired"]
@@ -57,10 +57,10 @@ open class NetWorkMonitor: NSObject {
         let pattern = "\\.\\d+\\s+(\\d+)\\s+(\\d+)\\n"
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
-            let results = regex.matches(in: string, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, string.characters.count))
+            let results = regex.matches(in: string, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, string.count))
             for result in results {
-                bytesIn += Double((string as NSString).substring(with: result.rangeAt(1)))!
-                bytesOut += Double((string as NSString).substring(with: result.rangeAt(2)))!
+                bytesIn += Double((string as NSString).substring(with: result.range(at:1)))!
+                bytesOut += Double((string as NSString).substring(with: result.range(at:2)))!
             }
             bytesIn /= interval
             bytesOut /= interval
